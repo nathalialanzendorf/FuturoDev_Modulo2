@@ -1,7 +1,6 @@
-package extras;
 import java.util.Scanner;
 
-public class M2S01Aula1_Extra {
+public class JavaVersion {
 
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);

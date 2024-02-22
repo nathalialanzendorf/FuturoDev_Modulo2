@@ -1,7 +1,4 @@
-package extras;
 import java.util.Scanner;
-
-import extras.person.Person;
 
 public class M2S01Aula1_Extra {
 
