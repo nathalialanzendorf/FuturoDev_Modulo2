@@ -1,8 +1,11 @@
 public class App {
 
     public static void main(String[] args) throws Exception {
-      ContaBancaria conta = new ContaBancaria(123, 456, "Fulano", 1000);
-      
+      ContaBancaria conta = new ContaBancaria();
+      conta.setNumeroDaConta(123);
+      conta.setAgecia(456);
+      conta.setNomeDoTitular("Fulano");
+      conta.setSaldo(1000.0);
       
       conta.depositar(500);
       conta.sacar(250);
@@ -10,5 +13,5 @@ public class App {
       conta.sacar(1500);
 
     }
-    
+
 }

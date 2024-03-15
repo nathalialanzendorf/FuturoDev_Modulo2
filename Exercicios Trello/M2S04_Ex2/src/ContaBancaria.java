@@ -43,7 +43,7 @@ public class ContaBancaria {
         return saldo;
     }
 
-    public void setSaldo(){ 
+    public void setSaldo(double saldo){ 
         this.saldo = saldo;
     }
 
