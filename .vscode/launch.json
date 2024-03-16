@@ -6,6 +6,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "br.senai.devtubarao.App",
+            "projectName": "FuturoDev - Módulo 2_50e22017"
+        },
+        {
+            "type": "java",
+            "name": "Exercicio1",
+            "request": "launch",
+            "mainClass": "Exercicio1",
+            "projectName": "FuturoDev - Módulo 2_50e22017"
+        },
+        {
+            "type": "java",
+            "name": "Exercicio3",
+            "request": "launch",
+            "mainClass": "Exercicio3",
+            "projectName": "FuturoDev - Módulo 2_50e22017"
+        },
+        {
+            "type": "java",
+            "name": "Exercicio2",
+            "request": "launch",
+            "mainClass": "Exercicio2",
+            "projectName": "FuturoDev - Módulo 2_50e22017"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "FuturoDev - Módulo 2_50e22017"
+        },
+        {
+            "type": "java",
             "name": "Exercicio",
             "request": "launch",
             "mainClass": "Exercicio",
