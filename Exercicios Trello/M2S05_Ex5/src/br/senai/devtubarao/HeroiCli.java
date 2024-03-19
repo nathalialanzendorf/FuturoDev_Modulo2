@@ -69,9 +69,9 @@ public class HeroiCli {
       heroi.setSuperpoder(superpoder);
       heroi.setIdade(idade);
 
-      herois.add(heroi);
+      save(heroi);
 
-      console.success("Heroi salvo com sucesso!");
+
 
       exibirMenu();
     }catch (InputMismatchException e){
@@ -117,8 +117,16 @@ public class HeroiCli {
     exibirMenu();
   }
 
-  
   private static void error() {
     error("Digite uma opcao valida.");
+  }
+
+  private static void save(Heroi heroi) {
+    if (herois.stream().anyMatch(h -> h.getNome().equals(heroi.getNome()))) {
+      console.error("Heroi ja cadastrado.");
+    } else {
+      herois.add(heroi);
+      console.success("Heroi salvo com sucesso!");
+    }
   }
 }
