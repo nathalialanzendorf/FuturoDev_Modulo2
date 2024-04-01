@@ -1,0 +1,1 @@
+UPDATE heroi SET idade = 41 WHERE identificador = 2;
