@@ -1,0 +1,1 @@
+SELECT identificador, nome FROM heroi WHERE superpoder IS NOT NULL;
