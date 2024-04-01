@@ -1,0 +1,1 @@
+SELECT nome, idade FROM heroi WHERE idade > 30;
