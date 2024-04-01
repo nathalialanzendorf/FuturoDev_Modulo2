@@ -1,1 +1,1 @@
-DELETE FROM heroi WHERE nome = 'Batman';
+SELECT * FROM heroi;
