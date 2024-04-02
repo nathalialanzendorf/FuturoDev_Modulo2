@@ -10,7 +10,8 @@ DO $$
 			
 
 		CREATE table heroi (
-			identificador integer GENERATED ALWAYS AS IDENTITY,
+			identificador SERIRAL PRIMARY KEY,
+			--identificador integer GENERATED ALWAYS AS IDENTITY,
 			nome varchar(255) NOT NULL,
 			superpoder varchar(255),
 			idade numeric(3),
