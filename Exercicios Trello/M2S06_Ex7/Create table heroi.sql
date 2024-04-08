@@ -3,11 +3,7 @@ DO $$
 		/*
 		* DDL - Data Definition Language
 		*/
-		IF  (EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'heroi')) THEN
-			DROP TABLE heroi;
-			RAISE NOTICE 'Heroi was deleted';
-		END IF;
-			
+		DROP TABLE IF EXISTS empregado;
 
 		CREATE table heroi (
 			identificador SERIRAL PRIMARY KEY,
@@ -17,7 +13,6 @@ DO $$
 			idade numeric(3),
 			data_cadastro timestamp DEFAULT current_timestamp NOT NULL
 		);
-		RAISE NOTICE 'Heroi table was created';
 
 		COMMENT ON TABLE heroi IS 'Tabela para cadastros de herois.';
 		COMMENT ON COLUMN heroi.identificador IS 'Identificador do heroi';		
