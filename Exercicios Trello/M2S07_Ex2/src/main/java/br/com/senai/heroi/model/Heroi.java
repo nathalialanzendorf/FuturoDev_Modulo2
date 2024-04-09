@@ -1,3 +1,5 @@
+package br.com.senai.heroi.model;
+
 public class Heroi {
 
     private String nome;
