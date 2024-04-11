@@ -2,6 +2,7 @@ package br.com.senai.heroi.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,17 +26,21 @@ public class HeroiController {
     }
 
     @GetMapping
-    public List<Heroi> getHeroi() {
-        return service.find();
+    public ResponseEntity<List<Heroi>> getHeroi() {
+        List<Heroi> herois = service.find();
+        return ResponseEntity.ok().body(herois);
     }
 
     @PostMapping
-    public void saveHeroi(@RequestBody Heroi heroi) {
+    public ResponseEntity<Heroi> saveHeroi(@RequestBody Heroi heroi) {
         service.save(heroi);
+
+        return ResponseEntity.ok().body(heroi);
     }
 
     @GetMapping(value = "/{name}")
-    public List<Heroi> getHeroi(@PathVariable String name) {
-        return service.find(name);
+    public ResponseEntity<List<Heroi>> getHeroi(@PathVariable String name) {
+        List<Heroi> herois = service.find(name);
+        return ResponseEntity.ok().body(herois);
     }
 }
