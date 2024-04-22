@@ -2,7 +2,7 @@ package br.com.senai.task.model;
 
 import br.com.senai.task.enums.Priority;
 import br.com.senai.task.enums.Status;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,6 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+
+import org.springframework.data.annotation.Transient;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,13 +32,15 @@ public class Task {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    @ManyToOne(targetEntity=Contact.class, fetch=FetchType.EAGER)
-    @JoinColumn(name="id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assignee__contact_id")
     private Contact assignee;
     
 }

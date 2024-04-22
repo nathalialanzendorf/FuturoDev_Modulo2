@@ -1,21 +1,14 @@
 package br.com.senai.task.repository;
 
+import org.springframework.stereotype.Repository;
 import java.util.List;
-
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.senai.task.model.Contact;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Component
-@RepositoryRestResource(collectionResourceRel = "cliente", path = "clientes")
-public interface ContactRepository extends PagingAndSortingRepository<Contact, Long> {
+@Repository
+public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-    //@Query("SELECT c.nome FROM Cliente c where c.id = :id")
-    Contact findById(@Param("id") Long id);
-    
+    public List<Contact> findAllByOrderByIdAsc();
 
-    List<Contact> findByame(@Param("name") String name);
 }

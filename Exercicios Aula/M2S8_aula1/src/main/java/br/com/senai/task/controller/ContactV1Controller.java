@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.senai.task.dto.ContactDTO;
-import br.com.senai.task.dto.converter.ContactConverter;
+import br.com.senai.task.dto.ContactV1Dto;
+import br.com.senai.task.dto.converter.ContactV1DataConverter;
 import br.com.senai.task.model.Contact;
 import br.com.senai.task.service.ContactService;
 
@@ -23,45 +23,43 @@ import br.com.senai.task.service.ContactService;
 public class ContactV1Controller {
     
     private ContactService service;
-    private ContactConverter converter = new ContactConverter();
+    private ContactV1DataConverter converter = new ContactV1DataConverter();
 
     @Autowired
-    public ContactV1Controller(ContactService service, ContactConverter converter) {
+    public ContactV1Controller(ContactService service, ContactV1DataConverter converter) {
         this.service = service;
         this.converter = converter;
     }
 
     @GetMapping
-    public ResponseEntity<List<ContactDTO>> get() {
-        List<Contact> contacts = service.find();
-        List<ContactDTO> dtos = converter.toDTO(contacts);
+    public ResponseEntity<List<Contact>> findAll() {
+        List<Contact> contacts = service.findAll();
 
-        return ResponseEntity.ok().body(dtos);
+        return ResponseEntity.ok().body(contacts);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ContactDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<Contact> findById(@PathVariable Long id) {
         Contact contact = service.findById(id);
-        ContactDTO dto = converter.toDTO(contact);
 
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(contact);
     }
 
     @PostMapping
-    public ResponseEntity<ContactDTO> save(@RequestBody Contact contact) {
+    public ResponseEntity<Contact> save(@RequestBody ContactV1Dto dto) {
+        Contact contact = converter.toEntity(dto);
         service.save(contact);
-        ContactDTO dto = converter.toDTO(contact);
 
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(contact);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ContactDTO> update(@PathVariable Long id, @RequestBody Contact contact) {
-        service.update(id, contact);
+    public ResponseEntity<Contact> update(@PathVariable Long id, @RequestBody ContactV1Dto dto) {
+        Contact contact = service.findById(id);
+        converter.toEntity(dto, contact);
+        service.save(contact);
 
-        ContactDTO dto = converter.toDTO(contact);
-
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(contact);
     }
 
     @DeleteMapping("{id}")

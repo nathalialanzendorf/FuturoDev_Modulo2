@@ -21,4 +21,8 @@ public class Contact {
     
     @Column(nullable = false, length = 255)
     private String name;
+
+    public Contact(Long id) {
+        this.id = id;
+    }
 }

@@ -1,6 +1,7 @@
 package br.com.senai.task.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,13 +21,17 @@ public class ContactService {
         this.repository = repository;
     }
 
-    public List<Contact> find() {
-        List<Contact> contacts = repository.find();
+    public List<Contact> findAll() {
+        List<Contact> contacts = repository.findAllByOrderByIdAsc();
 
-        if (contacts.isEmpty()) {
-            throw new NotFoundException("Nenhum contact encontrado.");
-        }
-        return contacts;
+        return Optional.ofNullable(contacts)
+            .filter(t -> !t.isEmpty())
+            .orElseThrow(() -> new NotFoundException("Nenhum contact encontrado."));
+    }
+
+    public Contact findById(Long id) {
+        return repository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Nenhum contact encontrado."));
     }
 
     public void save(Contact contact) {
@@ -34,27 +39,6 @@ public class ContactService {
         repository.save(contact);
     }
 
-    public void update(Long id, Contact contact) {
-        validate(contact);
-        Contact contactUpdated = findById(id);
-
-        if(contactUpdated != null){
-            repository.delete(contact);
-            repository.save(contact);
-        }else{
-            throw new NotFoundException("Nenhum contact encontrado.");
-        }
-    }
-
-    public Contact findById(Long id) {
-        Contact contact = repository.findById(id);
-
-        if (contact == null) {
-            throw new NotFoundException("Nenhum contact encontrado.");
-        }
-
-        return contact;
-    }
 
     public void delete(Long id) {
         Contact contact = findById(id);

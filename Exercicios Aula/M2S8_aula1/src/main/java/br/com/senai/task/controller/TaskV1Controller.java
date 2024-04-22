@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.senai.task.dto.TaskDTO;
-import br.com.senai.task.dto.converter.TaskConverter;
+import br.com.senai.task.dto.TaskV1Dto;
+import br.com.senai.task.dto.converter.TaskV1DataConverter;
 import br.com.senai.task.model.Task;
 import br.com.senai.task.service.TaskService;
 
@@ -23,44 +23,42 @@ import br.com.senai.task.service.TaskService;
 public class TaskV1Controller {
 
     private TaskService service;
-    private TaskConverter converter = new TaskConverter();
+    private TaskV1DataConverter converter = new TaskV1DataConverter();
 
     @Autowired
-    public TaskV1Controller(TaskService service, TaskConverter converter) {
+    public TaskV1Controller(TaskService service, TaskV1DataConverter converter) {
         this.service = service;
         this.converter = converter;
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> get() {
-        List<Task> tasks = service.find();
-        List<TaskDTO> dtos = converter.toDTO(tasks);
-
-        return ResponseEntity.ok().body(dtos);
+    public ResponseEntity<List<Task>> findAll() {
+        List<Task> tasks = service.findAll();
+        return ResponseEntity.ok().body(tasks);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<TaskDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<Task> findById(@PathVariable Long id) {
         Task task = service.findById(id);
-        TaskDTO dto = converter.toDTO(task);
 
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(task);
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> save(@RequestBody Task task) {
+    public ResponseEntity<Task> save(@RequestBody TaskV1Dto dto) {
+        Task task = converter.toEntity(dto);
         service.save(task);
-        TaskDTO dto = converter.toDTO(task);
 
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(task);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody Task task) {
-        service.update(id,task);
-        TaskDTO dto = converter.toDTO(task);
+    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody TaskV1Dto dto) {
+        Task task = service.findById(id);
+        converter.toEntity(dto, task);
+        service.save(task);
 
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(task);
     }
 
     @DeleteMapping("{id}")
