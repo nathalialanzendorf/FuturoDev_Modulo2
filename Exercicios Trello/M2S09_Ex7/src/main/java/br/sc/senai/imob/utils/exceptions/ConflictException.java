@@ -5,18 +5,18 @@ import org.springframework.http.HttpStatus;
 import br.sc.senai.imob.utils.exceptions.error.Error;
 
 public class ConflictException extends RuntimeException {
+  private static final  String MESSAGE = "O registro já existe.";
 
-  private final Error error;
-  private final static String MESSAGE = "O registro já existe.";
+  private final transient Error error;
   
   public ConflictException() {
     super(MESSAGE);
     this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE);
   }
 
-  public ConflictException(String message, Throwable cause) {
-    super(MESSAGE, cause);
-    this.error = new Error(HttpStatus.BAD_REQUEST, message, cause);
+  public ConflictException(String message, Exception exception) {
+    super(MESSAGE, exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, message, exception);
   }
 
   public ConflictException( String locationField) {
@@ -24,9 +24,9 @@ public class ConflictException extends RuntimeException {
     this.error = new Error(MESSAGE, locationField);
   }
 
-  public ConflictException(Throwable cause, String locationField) {
-    super(MESSAGE, cause);
-    this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, cause, locationField);
+  public ConflictException(Exception exception, String locationField) {
+    super(MESSAGE, exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, exception, locationField);
   }
 
   public Error getError() {

@@ -5,18 +5,18 @@ import org.springframework.http.HttpStatus;
 import br.sc.senai.imob.utils.exceptions.error.Error;
 
 public class NotFoundException extends RuntimeException {
+  private static final  String MESSAGE = "Registro não encontrado.";
 
-  private final Error error;
-  private final static String MESSAGE = "Registro não encontrado.";
+  private final transient Error error;
   
   public NotFoundException() {
     super(MESSAGE);
     this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE);
   }
 
-  public NotFoundException(String message, Throwable cause) {
-    super(MESSAGE, cause);
-    this.error = new Error(HttpStatus.BAD_REQUEST, message, cause);
+  public NotFoundException(String message, Exception exception) {
+    super(MESSAGE, exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, message, exception);
   }
 
   public NotFoundException(String locationField) {
@@ -24,9 +24,9 @@ public class NotFoundException extends RuntimeException {
     this.error = new Error(MESSAGE, locationField);
   }
 
-  public NotFoundException(Throwable cause, String locationField) {
-    super(MESSAGE, cause);
-    this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, cause, locationField);
+  public NotFoundException(Exception exception, String locationField) {
+    super(MESSAGE, exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, exception, locationField);
   }
 
   public Error getError() {

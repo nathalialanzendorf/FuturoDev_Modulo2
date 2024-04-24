@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import br.sc.senai.imob.utils.exceptions.error.Error;
 
 public class NullPointerException extends RuntimeException {
+  private static final  String MESSAGE = "O campo deve ser preenchido.";
 
-  private final Error error;
-  private final static String MESSAGE = "O campo deve ser preenchido.";
+  private final transient Error error;
   
   public NullPointerException() {
     super(MESSAGE);

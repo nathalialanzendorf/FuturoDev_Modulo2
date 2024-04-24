@@ -5,18 +5,18 @@ import org.springframework.http.HttpStatus;
 import br.sc.senai.imob.utils.exceptions.error.Error;
 
 public class BusinessException extends RuntimeException {
+  private static final  String MESSAGE = "Ocorreu um erro desconhecido.";
 
-  private final Error error;
-  private final static String MESSAGE = "Ocorreu um erro desconhecido.";
+  private final transient Error error;
   
   public BusinessException() {
     super(MESSAGE);
     this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE);
   }
 
-  public BusinessException(String message, Throwable cause) {
-    super(MESSAGE, cause);
-    this.error = new Error(HttpStatus.BAD_REQUEST, message, cause);
+  public BusinessException(String message, Exception exception) {
+    super(MESSAGE, exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, message, exception);
   }
 
   public BusinessException( String locationField) {
@@ -24,9 +24,9 @@ public class BusinessException extends RuntimeException {
     this.error = new Error(MESSAGE, locationField);
   }
 
-  public BusinessException(Throwable cause, String locationField) {
-    super(MESSAGE, cause);
-    this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, cause, locationField);
+  public BusinessException(Exception exception, String locationField) {
+    super(MESSAGE, exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, exception, locationField);
   }
 
   public Error getError() {
