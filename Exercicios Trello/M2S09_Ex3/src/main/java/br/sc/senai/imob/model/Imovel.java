@@ -11,11 +11,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Builder;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "imovel")
 public class Imovel {   
@@ -24,26 +29,35 @@ public class Imovel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    @Column(nullable = false, length = 255)
+    @NotEmpty()
+    @NotNull
+    @Size(min = 5, max = 255)
     private String descricao;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Tipo tipo;
 
-    @Column(nullable = false, length = 255)
+    @NotEmpty()
+    @NotNull
+    @Size(min = 5, max = 255)
     private String endereco;
 
-    @Column(nullable = false, length = 255)
+    @NotEmpty()
+    @NotNull
+    @Size(min = 5, max = 255)
     private String bairro;
 
-    @Column(nullable = false, length = 255)
+    @NotEmpty()
+    @NotNull
+    @Size(min = 5, max = 255)
     private String cidade;
 
-    @Column(nullable = false)
-    private double valor;
+    @NotNull()
+    @Positive()
+    private Double valor;
 
-    @Column(nullable = false)
+    @NotNull
+    @Past
     private LocalDate dataCadastro;
 
 }

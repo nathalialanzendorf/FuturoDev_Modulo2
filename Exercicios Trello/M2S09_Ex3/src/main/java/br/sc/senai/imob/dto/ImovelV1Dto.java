@@ -3,11 +3,11 @@ package br.sc.senai.imob.dto;
 import java.time.LocalDate;
 
 import br.sc.senai.imob.enums.Tipo;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class ImovelV1Dto {
 
     private Long codigo;
@@ -16,7 +16,6 @@ public class ImovelV1Dto {
     private String endereco;
     private String bairro;
     private String cidade;
-    private double valor;
+    private Double valor;
     private LocalDate dataCadastro;
-
 }

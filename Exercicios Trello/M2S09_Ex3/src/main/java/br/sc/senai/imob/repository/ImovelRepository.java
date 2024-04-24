@@ -10,5 +10,5 @@ import br.sc.senai.imob.model.Imovel;
 @Repository
 public interface ImovelRepository extends JpaRepository<Imovel, Long> {
     
-    public List<Imovel> findAllByOrderByIdAsc();
+    public List<Imovel> findAllByOrderByCodigoAsc();
 }
