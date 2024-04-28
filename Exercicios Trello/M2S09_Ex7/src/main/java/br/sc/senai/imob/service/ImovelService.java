@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import br.sc.senai.imob.model.Imovel;
 import br.sc.senai.imob.repository.ImovelRepository;
 import br.sc.senai.imob.utils.exceptions.NotFoundException;
-import br.sc.senai.imob.utils.exceptions.NullPointerException;
 
 @Component
 public class ImovelService {
@@ -34,11 +33,7 @@ public class ImovelService {
     }
 
     public void save(Imovel imovel) {
-       try {
-            repository.save(imovel);
-        } catch (Exception e) {
-            throw new NullPointerException(e);
-        }
+        repository.save(imovel);
     }
 
     public void delete(Long codigo) {

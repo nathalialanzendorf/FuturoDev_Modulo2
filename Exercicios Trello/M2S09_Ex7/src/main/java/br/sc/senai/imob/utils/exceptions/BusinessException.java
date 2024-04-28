@@ -19,7 +19,7 @@ public class BusinessException extends RuntimeException {
     this.error = new Error(HttpStatus.BAD_REQUEST, message, exception);
   }
 
-  public BusinessException( String locationField) {
+  public BusinessException(String locationField) {
     super(MESSAGE);
     this.error = new Error(MESSAGE, locationField);
   }
@@ -27,6 +27,11 @@ public class BusinessException extends RuntimeException {
   public BusinessException(Exception exception, String locationField) {
     super(MESSAGE, exception);
     this.error = new Error(HttpStatus.BAD_REQUEST, MESSAGE, exception, locationField);
+  }
+
+  public BusinessException(Exception exception) {
+    super(exception.getMessage(), exception);
+    this.error = new Error(HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
   }
 
   public Error getError() {

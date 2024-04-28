@@ -2,6 +2,7 @@ package br.sc.senai.imob.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.sc.senai.imob.dto.ImovelV1Dto;
-import br.sc.senai.imob.dto.converter.ImovelV1DataConverter;
 import br.sc.senai.imob.model.Imovel;
 import br.sc.senai.imob.service.ImovelService;
 import jakarta.validation.Valid;
@@ -24,12 +24,12 @@ import jakarta.validation.Valid;
 public class ImovelController {
 
     private ImovelService service;
-    private ImovelV1DataConverter converter;
+    private ModelMapper mapper;
 
     @Autowired
-    public ImovelController(ImovelService service, ImovelV1DataConverter converter) {
+    public ImovelController(ImovelService service, ModelMapper mapper) {
         this.service = service;
-        this.converter = converter;
+        this.mapper = mapper;
     }
     
     @GetMapping
@@ -46,7 +46,7 @@ public class ImovelController {
 
     @PostMapping
     public ResponseEntity<String> save(@RequestBody @Valid ImovelV1Dto dto) {
-        Imovel imovel = converter.convertToEntity(dto);
+        Imovel imovel = mapper.map(dto, Imovel.class);
         service.save(imovel);
 
         return ResponseEntity.noContent().build();
@@ -55,7 +55,7 @@ public class ImovelController {
     @PutMapping("{codigo}")
     public ResponseEntity<Imovel> update(@PathVariable Long codigo, @RequestBody @Valid ImovelV1Dto dto) {
         Imovel imovel = service.findById(codigo);
-        converter.convertToEntity(dto, imovel);
+        mapper.map(imovel, ImovelV1Dto.class);
         service.save(imovel);
 
         return ResponseEntity.ok().body(imovel);

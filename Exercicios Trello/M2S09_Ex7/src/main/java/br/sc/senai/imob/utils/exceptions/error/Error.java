@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import lombok.Data;
 import lombok.Builder;
@@ -35,7 +34,7 @@ public class Error {
     public Error(String message, String locationField) {
         this.statusCode = HttpStatus.BAD_REQUEST;
         this.message = message;
-        addDetail(null, locationField);
+        //addDetail(null, locationField);
     }
 
     public Error(HttpStatus statusCode, String message, Exception exception) {
@@ -52,8 +51,17 @@ public class Error {
 
     public void addDetail(Exception exception, String locationField) {
         ErrorDetail detail = ErrorDetail.builder()
-            .reason(exception.getMessage())
+            .reason(exception.getLocalizedMessage())
             .locationField(locationField == null ? "" : locationField)
+            .build();
+        errors.add(detail);
+    }
+    
+
+    public void addDetail(String message, String locationField) {
+        ErrorDetail detail = ErrorDetail.builder()
+            .reason(message)
+            .locationField(locationField)
             .build();
         errors.add(detail);
     }
